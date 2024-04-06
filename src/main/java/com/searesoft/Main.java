@@ -12,8 +12,7 @@ public class Main {
             String jar = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath();
             if (jar.endsWith(".jar")) {
                 // JOptionPane.showMessageDialog(null, "Please run this application from the console.");
-                ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "java.exe", "-jar", jar);
-                pb.start();
+                new ProcessBuilder("cmd.exe", "/c", "start", "java.exe", "-jar", jar).start();
                 return;
             }
         }
@@ -49,9 +48,7 @@ public class Main {
             try {
                 String str = reader.readLine();
                 switch (str) {
-                    case "quit", "q" -> {
-                        terminated[0] = true;
-                    }
+                    case "quit", "q" -> terminated[0] = true;
                     case "scripts", "s" -> {
                         new ProcessBuilder("explorer", path).start();
                         System.out.println("Opened explorer to folder: " + path);
@@ -77,7 +74,7 @@ public class Main {
     private static void processBatch(File file) {
         try {
             output("Processing: " + file.getAbsoluteFile());
-            ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", "/wait", "cmd", "/c", "\"" + file.getAbsoluteFile().toString() + "\"");
+            ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", "/wait", "cmd", "/c", "\"" + file.getAbsoluteFile() + "\"");
             Process process = pb.start();
             int exitCode = process.waitFor();
             output("Exit code: " + exitCode);
